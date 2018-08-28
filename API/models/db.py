@@ -16,9 +16,10 @@ def create_tables():
         """,
         """ 
         CREATE TABLE IF NOT EXISTS questions (
+            userId INTEGER,
             questionId SERIAL PRIMARY KEY,
             Topic VARCHAR(255) NOT NULL,
-            Description (255),
+            Description VARCHAR(255),
             created_at VARCHAR(255),
             FOREIGN KEY(userId)
             REFERENCES users(userId)
@@ -26,8 +27,11 @@ def create_tables():
         """,
         """
         CREATE TABLE IF NOT EXISTS answers(
-            answerId INTEGER PRIMARY KEY,
+            questionId INTEGER,
+            userId INTEGER,
+            answerId SERIAL PRIMARY KEY,
             answer VARCHAR(255) NOT NULL,
+            created_at VARCHAR(255),
             FOREIGN KEY (questionId)
             REFERENCES questions (questionId)
             ON UPDATE CASCADE ON DELETE CASCADE
@@ -38,10 +42,10 @@ def create_tables():
     try:
         # read the connection parameters
         params = config()
-        print(params)
+
         # connect to the PostgreSQL server
-        # connection = psycopg2.connect(**params)
-        connection = psycopg2.connect(host=params['post'], dbname=params['database'], user=params['user'], password=params['password'])
+        connection = psycopg2.connect(**params)
+        
         cursor = connection.cursor()
 
         # create table one by one
@@ -49,16 +53,13 @@ def create_tables():
             cursor.execute(command)
 
         # close communication with the PostgreSQL database server
-        cursor.close()
+        # cursor.close()
 
         # commit the changes
         connection.commit()
 
     except (Exception, psycopg2.DatabaseError) as error:
-        print("Cannot connect to database")
-    else:
-        if connection is not None:
-            connection.close()
-            print('Database connection closed.')
+        print(error)
+
 
 
