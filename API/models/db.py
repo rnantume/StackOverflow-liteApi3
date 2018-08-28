@@ -45,7 +45,7 @@ def connection():
 
         # connect to the PostgreSQL server
         connection = psycopg2.connect(**params)
-        
+        connection.autocommit = True
         cursor = connection.cursor()
 
         # create table one by one
