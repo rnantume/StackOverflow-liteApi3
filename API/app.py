@@ -11,5 +11,5 @@ app.config['DEBUG'] = True
 registering the users, questions blueprint
 """
 app.register_blueprint(users_bp)
-# app.register_blueprint(questions_bp)
+app.register_blueprint(questions_bp)
 

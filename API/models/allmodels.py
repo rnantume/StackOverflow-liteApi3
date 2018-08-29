@@ -40,19 +40,24 @@ class User:
         return user
 
 class Question:
-    
+    # def __init__(self, username, email, password):
+    #     self.username = username
+    #     self.email = email
+    #     self.password = password
+
     @staticmethod
     def get_questions():
         """
-        gets all questions in database and returns list of questions"""
-        cursor = connection()
+        gets all questions in database and returns list of questions
+        """
         query = """SELECT * FROM questions"""
-        result = cursor.execute(query)
-        questions = result.fetchall()
+        cur = connection()
+        cur.execute(query)
+        questions = cur.fetchall()
 
-        keys = ["userId", "questionId", ]
+        keys = ["userId", "questionId", "Topic", "Description", "created_at"]
         def dictify(qtn):
-            return dict(zip(keys, questions))
+            return dict(zip(keys, qtn))
 
         qtns = [dictify(qtn) for qtn in questions]
         return qtns
