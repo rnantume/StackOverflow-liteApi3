@@ -39,3 +39,20 @@ class User:
         connection.close()
         return user
 
+class Question:
+    
+    @staticmethod
+    def get_questions():
+        """
+        gets all questions in database and returns list of questions"""
+        cursor = connection()
+        query = """SELECT * FROM questions"""
+        result = cursor.execute(query)
+        questions = result.fetchall()
+
+        keys = ["userId", "questionId", ]
+        def dictify(qtn):
+            return dict(zip(keys, questions))
+
+        qtns = [dictify(qtn) for qtn in questions]
+        return qtns
