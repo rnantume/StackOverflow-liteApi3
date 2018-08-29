@@ -1,8 +1,11 @@
 import os
+
 from configparser import ConfigParser
+default_path = os.path.abspath('database.ini')
  
- 
-def config(filename='database.ini', section='postgresql'):
+def config(filename=None, section='postgresql'):
+    if not filename:
+        filename = default_path
     # create a parser
     parser = ConfigParser()
     # read config file

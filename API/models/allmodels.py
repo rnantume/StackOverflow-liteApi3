@@ -39,3 +39,25 @@ class User:
         connection.close()
         return user
 
+class Question:
+    # def __init__(self, username, email, password):
+    #     self.username = username
+    #     self.email = email
+    #     self.password = password
+
+    @staticmethod
+    def get_questions():
+        """
+        gets all questions in database and returns list of questions
+        """
+        query = """SELECT * FROM questions"""
+        cur = connection()
+        cur.execute(query)
+        questions = cur.fetchall()
+
+        keys = ["userId", "questionId", "Topic", "Description", "created_at"]
+        def dictify(qtn):
+            return dict(zip(keys, qtn))
+
+        qtns = [dictify(qtn) for qtn in questions]
+        return qtns
