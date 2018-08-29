@@ -3,7 +3,7 @@ import datetime
 
 from config import config
 
-def create_tables():
+def connection():
     """ create tables in the PostgreSQL database"""
     commands = (
         """
@@ -45,21 +45,17 @@ def create_tables():
 
         # connect to the PostgreSQL server
         connection = psycopg2.connect(**params)
-        
+        connection.autocommit = True
         cursor = connection.cursor()
 
         # create table one by one
         for command in commands:
             cursor.execute(command)
-
-        # close communication with the PostgreSQL database server
-        # cursor.close()
-
-        # commit the changes
-        connection.commit()
+        return cursor
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
+    
 
 
 
