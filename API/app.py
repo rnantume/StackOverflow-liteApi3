@@ -7,7 +7,7 @@ from API.resources.answers import answers_bp
 
 app = Flask(__name__,instance_relative_config=True)
 app.config['DEBUG'] = True
-app.confi['JWT_SECRET_KEY'] = 'secret'
+app.config['JWT_SECRET_KEY'] = 'secret'
 jwt = JWTManager(app)
 
 

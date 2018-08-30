@@ -27,7 +27,7 @@ class User:
 
     @classmethod
     def find_by_email(cls, email):
-        query = """SELECT * FROM users WHERE username =%s"""
+        query = """SELECT * FROM users WHERE email =%s"""
         cur = connection()
         cur.execute(query, (email,))
         row = cur.fetchone()
@@ -46,7 +46,7 @@ class User:
             return user
         else:
             user = None
-
+        
 
     def signin_user(self, username):
         query = """SELECT * FROM users WHERE username=%s"""

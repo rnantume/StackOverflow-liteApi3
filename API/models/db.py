@@ -11,7 +11,8 @@ def connection():
             userId SERIAL PRIMARY KEY,
             username VARCHAR(255) NOT NULL, 
             email VARCHAR(255),
-            password VARCHAR(255)
+            password VARCHAR(255),
+            joined_at TIMESTAMP DEFAULT pg_postmaster_start_time()
             )
         """,
         """ 
