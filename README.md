@@ -104,6 +104,10 @@ pytest tests -v --cov=API  --cov-report term-missing
 <td>Register a user</td>
 </tr>
 <tr>
+<td>GET /auth/login</td>
+<td>Login a user</td>
+</tr>
+<tr>
 <td>GET /questions</td>
 <td>Retrieves all questions in the application memory</td>
 </tr>
