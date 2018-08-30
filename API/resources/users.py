@@ -66,25 +66,26 @@ class Login(Resource):
         """
         logging in a user
         """
+        try:
         args = self.reqparse.parse_args()
-        user = User(args['username'], None, args['password'])
-        logging_user = user.signin_user(args['username'])
-
-        if logging_user  is not None:
-            token = create_access_token(identity=args['username'])
-            return jsonify({"token":token}),200
+        user = User.signin_user(args['username'], args['password'])
+        except None as error:
+            return error
+            # return jsonify({"message":"Login failed!,Sign Up"}), 400
         else:
-            return jsonify({"message":"Login failed!"}), 400
+            token = create_access_token(identity=user[0])
+            return jsonify({"token":token}),200
 
 
 
-users_bp = Blueprint('api_logic.users', __name__)
+
+users_bp = Blueprint('resources.users', __name__)
 users_api = Api(users_bp)
 
 users_api.add_resource(Signup,
     '/StackOverflow-lite/api/v1/auth/signup',
     endpoint='signup')
 
-users_api.add_resource(Signup,
+users_api.add_resource(Login,
     '/StackOverflow-lite/api/v1/auth/login',
     endpoint='login')

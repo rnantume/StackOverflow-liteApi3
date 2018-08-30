@@ -47,8 +47,8 @@ class User:
         else:
             user = None
         
-
-    def signin_user(self, username):
+    @classmethod
+    def signin_user(cls, username, password):
         query = """SELECT * FROM users WHERE username=%s"""
         cur = connection()
         cur.execute(query, (self.username,))
