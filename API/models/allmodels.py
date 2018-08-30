@@ -43,17 +43,21 @@ class User:
         cur.execute(query, (userId,))
         row = result.fetchone()
         if row:
-            return user
+            return row[0]
         else:
-            user = None
+            return None
         
     @classmethod
     def signin_user(cls, username, password):
-        query = """SELECT * FROM users WHERE username=%s"""
-        cur = connection()
-        cur.execute(query, (self.username,))
-        result = cur.fetchone()
-        return result
+        user = User.find_by_username(username)
+        pass_ = user[3]
+        if user and pass_==password:
+            return user
+
+    @staticmethod
+    def identity(payload):
+        userId = payload['identity']
+        return User.find_by_userId(userId)
 
 class Question:
 

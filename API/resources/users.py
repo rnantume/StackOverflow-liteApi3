@@ -67,14 +67,13 @@ class Login(Resource):
         logging in a user
         """
         try:
-        args = self.reqparse.parse_args()
-        user = User.signin_user(args['username'], args['password'])
-        except None as error:
-            return error
-            # return jsonify({"message":"Login failed!,Sign Up"}), 400
+            args = self.reqparse.parse_args()
+            user = User.signin_user(args['username'], args['password'])
+        except TypeError:
+            return {"message":"Login failed!,Sign Up"}, 400
         else:
             token = create_access_token(identity=user[0])
-            return jsonify({"token":token}),200
+            return {"token":token},200
 
 
 
